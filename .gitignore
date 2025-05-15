@@ -1,0 +1,7 @@
+build/
+#sdkconfig
+sdkconfig.old
+.vscode/
+.settings/org.eclipse*
+.clangd
+.cache/
