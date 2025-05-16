@@ -419,6 +419,80 @@ CONFIG_COMPILER_ORPHAN_SECTIONS_PLACE=y
 #
 
 #
+# Driver Configurations
+#
+
+#
+# TWAI Configuration
+#
+CONFIG_TWAI_ISR_IN_IRAM=y
+CONFIG_TWAI_ERRATA_FIX_BUS_OFF_REC=y
+CONFIG_TWAI_ERRATA_FIX_TX_INTR_LOST=y
+CONFIG_TWAI_ERRATA_FIX_RX_FRAME_INVALID=y
+CONFIG_TWAI_ERRATA_FIX_RX_FIFO_CORRUPT=y
+CONFIG_TWAI_ERRATA_FIX_LISTEN_ONLY_DOM=y
+# end of TWAI Configuration
+
+#
+# Legacy ADC Driver Configuration
+#
+CONFIG_ADC_DISABLE_DAC=y
+# CONFIG_ADC_SUPPRESS_DEPRECATE_WARN is not set
+
+#
+# Legacy ADC Calibration Configuration
+#
+CONFIG_ADC_CAL_EFUSE_TP_ENABLE=y
+CONFIG_ADC_CAL_EFUSE_VREF_ENABLE=y
+CONFIG_ADC_CAL_LUT_ENABLE=y
+# CONFIG_ADC_CALI_SUPPRESS_DEPRECATE_WARN is not set
+# end of Legacy ADC Calibration Configuration
+# end of Legacy ADC Driver Configuration
+
+#
+# Legacy DAC Driver Configurations
+#
+# CONFIG_DAC_SUPPRESS_DEPRECATE_WARN is not set
+# end of Legacy DAC Driver Configurations
+
+#
+# Legacy MCPWM Driver Configurations
+#
+# CONFIG_MCPWM_SUPPRESS_DEPRECATE_WARN is not set
+# end of Legacy MCPWM Driver Configurations
+
+#
+# Legacy Timer Group Driver Configurations
+#
+# CONFIG_GPTIMER_SUPPRESS_DEPRECATE_WARN is not set
+# end of Legacy Timer Group Driver Configurations
+
+#
+# Legacy RMT Driver Configurations
+#
+# CONFIG_RMT_SUPPRESS_DEPRECATE_WARN is not set
+# end of Legacy RMT Driver Configurations
+
+#
+# Legacy I2S Driver Configurations
+#
+# CONFIG_I2S_SUPPRESS_DEPRECATE_WARN is not set
+# end of Legacy I2S Driver Configurations
+
+#
+# Legacy PCNT Driver Configurations
+#
+# CONFIG_PCNT_SUPPRESS_DEPRECATE_WARN is not set
+# end of Legacy PCNT Driver Configurations
+
+#
+# Legacy SDM Driver Configurations
+#
+# CONFIG_SDM_SUPPRESS_DEPRECATE_WARN is not set
+# end of Legacy SDM Driver Configurations
+# end of Driver Configurations
+
+#
 # eFuse Bit Manager
 #
 # CONFIG_EFUSE_CUSTOM_TABLE is not set
@@ -436,11 +510,95 @@ CONFIG_ESP_ERR_TO_NAME_LOOKUP=y
 # end of Common ESP-related
 
 #
+# ESP-Driver:DAC Configurations
+#
+# CONFIG_DAC_CTRL_FUNC_IN_IRAM is not set
+# CONFIG_DAC_ISR_IRAM_SAFE is not set
+# CONFIG_DAC_ENABLE_DEBUG_LOG is not set
+CONFIG_DAC_DMA_AUTO_16BIT_ALIGN=y
+# end of ESP-Driver:DAC Configurations
+
+#
 # ESP-Driver:GPIO Configurations
 #
 # CONFIG_GPIO_ESP32_SUPPORT_SWITCH_SLP_PULL is not set
 # CONFIG_GPIO_CTRL_FUNC_IN_IRAM is not set
 # end of ESP-Driver:GPIO Configurations
+
+#
+# ESP-Driver:GPTimer Configurations
+#
+CONFIG_GPTIMER_ISR_HANDLER_IN_IRAM=y
+# CONFIG_GPTIMER_CTRL_FUNC_IN_IRAM is not set
+# CONFIG_GPTIMER_ISR_IRAM_SAFE is not set
+# CONFIG_GPTIMER_ENABLE_DEBUG_LOG is not set
+# end of ESP-Driver:GPTimer Configurations
+
+#
+# ESP-Driver:I2C Configurations
+#
+# CONFIG_I2C_ISR_IRAM_SAFE is not set
+# CONFIG_I2C_ENABLE_DEBUG_LOG is not set
+# end of ESP-Driver:I2C Configurations
+
+#
+# ESP-Driver:I2S Configurations
+#
+# CONFIG_I2S_ISR_IRAM_SAFE is not set
+# CONFIG_I2S_ENABLE_DEBUG_LOG is not set
+# end of ESP-Driver:I2S Configurations
+
+#
+# ESP-Driver:LEDC Configurations
+#
+# CONFIG_LEDC_CTRL_FUNC_IN_IRAM is not set
+# end of ESP-Driver:LEDC Configurations
+
+#
+# ESP-Driver:MCPWM Configurations
+#
+# CONFIG_MCPWM_ISR_IRAM_SAFE is not set
+# CONFIG_MCPWM_CTRL_FUNC_IN_IRAM is not set
+# CONFIG_MCPWM_ENABLE_DEBUG_LOG is not set
+# end of ESP-Driver:MCPWM Configurations
+
+#
+# ESP-Driver:PCNT Configurations
+#
+# CONFIG_PCNT_CTRL_FUNC_IN_IRAM is not set
+# CONFIG_PCNT_ISR_IRAM_SAFE is not set
+# CONFIG_PCNT_ENABLE_DEBUG_LOG is not set
+# end of ESP-Driver:PCNT Configurations
+
+#
+# ESP-Driver:RMT Configurations
+#
+# CONFIG_RMT_ISR_IRAM_SAFE is not set
+# CONFIG_RMT_RECV_FUNC_IN_IRAM is not set
+# CONFIG_RMT_ENABLE_DEBUG_LOG is not set
+# end of ESP-Driver:RMT Configurations
+
+#
+# ESP-Driver:Sigma Delta Modulator Configurations
+#
+# CONFIG_SDM_CTRL_FUNC_IN_IRAM is not set
+# CONFIG_SDM_ENABLE_DEBUG_LOG is not set
+# end of ESP-Driver:Sigma Delta Modulator Configurations
+
+#
+# ESP-Driver:SPI Configurations
+#
+# CONFIG_SPI_MASTER_IN_IRAM is not set
+CONFIG_SPI_MASTER_ISR_IN_IRAM=y
+# CONFIG_SPI_SLAVE_IN_IRAM is not set
+CONFIG_SPI_SLAVE_ISR_IN_IRAM=y
+# end of ESP-Driver:SPI Configurations
+
+#
+# ESP-Driver:UART Configurations
+#
+# CONFIG_UART_ISR_IN_IRAM is not set
+# end of ESP-Driver:UART Configurations
 
 #
 # GDB Stub
@@ -529,6 +687,8 @@ CONFIG_XTAL_FREQ_40=y
 # CONFIG_XTAL_FREQ_AUTO is not set
 CONFIG_XTAL_FREQ=40
 # end of Main XTAL Config
+
+CONFIG_ESP_SPI_BUS_LOCK_ISR_FUNCS_IN_IRAM=y
 # end of Hardware Settings
 
 #
@@ -541,6 +701,12 @@ CONFIG_XTAL_FREQ=40
 #
 # CONFIG_PM_ENABLE is not set
 # end of Power Management
+
+#
+# ESP Ringbuf
+#
+# CONFIG_RINGBUF_PLACE_FUNCTIONS_INTO_FLASH is not set
+# end of ESP Ringbuf
 
 #
 # ESP System Settings
@@ -730,6 +896,8 @@ CONFIG_HAL_ASSERTION_EQUALS_SYSTEM=y
 # CONFIG_HAL_ASSERTION_SILENT is not set
 # CONFIG_HAL_ASSERTION_ENABLE is not set
 CONFIG_HAL_DEFAULT_ASSERTION_LEVEL=2
+CONFIG_HAL_SPI_MASTER_FUNC_IN_IRAM=y
+CONFIG_HAL_SPI_SLAVE_FUNC_IN_IRAM=y
 # end of Hardware Abstraction Layer (HAL) and Low Level (LL)
 
 #
@@ -1034,6 +1202,8 @@ CONFIG_OPTIMIZATION_ASSERTION_LEVEL=2
 CONFIG_STACK_CHECK_ALL=y
 CONFIG_STACK_CHECK=y
 CONFIG_WARN_WRITE_STRINGS=y
+CONFIG_ADC2_DISABLE_DAC=y
+# CONFIG_MCPWM_ISR_IN_IRAM is not set
 CONFIG_GDBSTUB_SUPPORT_TASKS=y
 CONFIG_GDBSTUB_MAX_TASKS=32
 # CONFIG_TWO_UNIVERSAL_MAC_ADDRESS is not set

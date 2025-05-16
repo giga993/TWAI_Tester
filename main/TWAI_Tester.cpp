@@ -95,7 +95,8 @@ static const twai_timing_config_t t_config = []() {
 }();
 #pragma GCC diagnostic pop
 
-static const twai_general_config_t g_config = {.mode = TWAI_MODE_NORMAL,
+static const twai_general_config_t g_config = {.controller_id = 0,
+                                               .mode = TWAI_MODE_NORMAL,
                                                .tx_io = TX_GPIO_NUM,
                                                .rx_io = RX_GPIO_NUM,
                                                .clkout_io = TWAI_IO_UNUSED,
@@ -165,7 +166,7 @@ static void ctrl_task(void *arg) {
                                 esp_err_t res = twai_get_status_info(&status_info);
                                 if (res == ESP_OK) {
                                     // Print TWAI status
-                                    can_messages_router_print_status(status_info, ESP_LOG_WARN);
+                                    can_messages_router_print_status(status_info, ESP_LOG_DEBUG);
                                     stats_printed = true;
                                 } else {
                                     // Print error
@@ -174,7 +175,7 @@ static void ctrl_task(void *arg) {
                                 }
                             }
                             // Then print the alert cause
-                            ESP_LOGE(TAG, "!!! ALERT !!!: %s (%lx/%lx)", _alert_name_list[i].name,
+                            ESP_LOGD(TAG, "!!! ALERT !!!: %s (%lx/%lx)", _alert_name_list[i].name,
                                      _alert_name_list[i].alert, alerts);
 
                         } else {
@@ -218,7 +219,7 @@ uint8_t sample_data[8] = {0xAB, 0xCD, 0xEF, 0x01, 0x23, 0x45, 0x67, 0x89};
 // Check if the received data matches the sample data
 static void _check_my_message(twai_message_t *canMessage) {
     static uint32_t message_cnt = 0;
-    if (canMessage->identifier == 0x10000) {
+    if (canMessage->identifier == 0x1) {
         if (canMessage->data_length_code != 8) {
             goto error;
         }
@@ -257,7 +258,7 @@ static void rx_task(void *arg) {
             case ESP_OK: {
                 // Handle Message
                 switch (message.identifier) {
-                    case 0x10000: {
+                    case 0x1: {
                         // compare to other message
                         _check_my_message(&message);
                         break;
@@ -319,31 +320,4 @@ extern "C" void app_main(void) {
     // Cleanup
     vSemaphoreDelete(tx_task_sem);
     vSemaphoreDelete(ctrl_task_sem);
-}
-
-static void _twai_message_checker(twai_message_t *canMessage) {
-    static const uint8_t kExpected[8] = {0x01, 0x23, 0x45, 0x67, 0x89, 0xAB, 0xCD, 0xEF};
-    if (canMessage->identifier == 0x01) {
-        if (memcmp(canMessage->data, kExpected, sizeof(kExpected)) == 0) {
-            // Got correct message
-            ESP_LOGD(TAG,
-                     "Got correct message ID: %lu Data: %02x %02x %02x %02x %02x %02x %02x %02x",
-                     canMessage->identifier, canMessage->data[0], canMessage->data[1],
-                     canMessage->data[2], canMessage->data[3], canMessage->data[4],
-                     canMessage->data[5], canMessage->data[6], canMessage->data[7]);
-        } else {
-            // Got incorrect message
-            ESP_LOGE(TAG, "Got wrong message ID: %lu Data: %02x %02x %02x %02x %02x %02x %02x %02x",
-                     canMessage->identifier, canMessage->data[0], canMessage->data[1],
-                     canMessage->data[2], canMessage->data[3], canMessage->data[4],
-                     canMessage->data[5], canMessage->data[6], canMessage->data[7]);
-        }
-
-    } else {
-        ESP_LOGW(TAG, "Got message ID: %lu Data: %02x %02x %02x %02x %02x %02x %02x %02x",
-                 canMessage->identifier, canMessage->data[0], canMessage->data[1],
-                 canMessage->data[2], canMessage->data[3], canMessage->data[4], canMessage->data[5],
-                 canMessage->data[6], canMessage->data[7]);
-    }
-    return;
 }
